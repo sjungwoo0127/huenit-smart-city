@@ -1,4 +1,4 @@
-# 휴닛 스마트 시티 소개
+# 휴닛 스마트 시티
 
 ## 휴닛 스마트 시티란?
 
@@ -49,8 +49,7 @@ _추후 업데이트 예정_
 > 초기 세팅
 
 {% hint style="danger" %}
-
-#### **주의사항**
+**주의사항**
 
 스마트 시티의 초기 세팅은 반드시 전원이 꺼진 상태에서 설정해야 합니다. 전원이 켜진 상태에서 리니어 벨트를 이동시키면 고장의 원인이 될 수 있으니 주의하십시오.
 {% endhint %}
@@ -68,13 +67,13 @@ _추후 업데이트 예정_
 
 ### 소프트웨어 환경
 
-스마트 시티의 소프트웨어는 **키오스크(터치 모니터)**를 통해 조작합니다.
+스마트 시티의 소프트웨어는 \*\*키오스크(터치 모니터)\*\*를 통해 조작합니다.
 
 <figure><img src=".gitbook/assets/IMG_7945.jpg" alt=""><figcaption><p>키오스크 소프트웨어 화면</p></figcaption></figure>
 
-* **터치 모니터**
+*   **터치 모니터**
 
-  사용자가 직접 조작할 수 있는 소프트웨어로, 모바일 로봇을 코딩하고 미션을 제어하거나 설정하는 데 사용됩니다. 모바일 로봇의 주행 상태와 미션 진행 상황을 실시간으로 확인할 수 있어 사용자 중심의 인터랙티브한 경험을 제공합니다.
+    사용자가 직접 조작할 수 있는 소프트웨어로, 모바일 로봇을 코딩하고 미션을 제어하거나 설정하는 데 사용됩니다. 모바일 로봇의 주행 상태와 미션 진행 상황을 실시간으로 확인할 수 있어 사용자 중심의 인터랙티브한 경험을 제공합니다.
 
 ## 미션 렘프
 
@@ -108,24 +107,20 @@ _추후 업데이트 예정_
 
 <figure><img src=".gitbook/assets/IMG_7955.jpg" alt=""><figcaption><p>AI 카메라 장착 방법</p></figcaption></figure>
 
-<figure><img src=".gitbook/assets/IMG_7963.jpg" alt=""><figcaption><p>AI 카메라 슬롯 (빈 상태)</p></figcaption></figure>
-
 {% hint style="danger" %}
-
-#### **주의사항**
+**주의사항**
 
 카메라를 끼울 때 반드시 **꽉 끼워주세요.** 대부분의 문제가 카메라가 제대로 장착되지 않아서 발생합니다. 사용 후에는 카메라를 빼서 보관해 주세요.
 {% endhint %}
 
-### 충전
+<figure><img src=".gitbook/assets/IMG_7963.jpg" alt=""><figcaption><p>AI 카메라 슬롯 (빈 상태)</p></figcaption></figure>
 
-<figure><img src=".gitbook/assets/IMG_7942.jpg" alt=""><figcaption><p>모바일 로봇 충전 도크 (테이블 측면)</p></figcaption></figure>
+### 충전
 
 <figure><img src=".gitbook/assets/IMG_7959.jpg" alt=""><figcaption><p>모바일 로봇 2대가 충전 도크에 거치된 모습</p></figcaption></figure>
 
 {% hint style="danger" %}
-
-#### **주의사항**
+**주의사항**
 
 충전 시 반드시 **AI 카메라를 분리한 후** 충전해 주세요. 카메라를 장착한 채로 충전하면 **발열**이 발생할 수 있습니다.
 {% endhint %}
@@ -143,13 +138,8 @@ _추후 업데이트 예정_
 **리니어 벨트 문제 발생 시**
 
 1. 전원을 분리합니다.
-2. 잠시 기다립니다.
+2. 10초 정도 기다립니다.
 3. 리니어 벨트를 **초기 세팅 위치**(신호등 쪽)로 밀어놓습니다.
 4. 전원을 다시 연결합니다.
 {% endhint %}
 
-사용 방법은 아래 페이지에서 단계별로 확인할 수 있습니다.
-
-{% content-ref url="undefined.md" %}
-[undefined.md](undefined.md)
-{% endcontent-ref %}
