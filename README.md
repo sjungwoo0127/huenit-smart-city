@@ -115,6 +115,26 @@ _추후 업데이트 예정_
 
 <figure><img src=".gitbook/assets/IMG_7963.jpg" alt=""><figcaption><p>AI 카메라 슬롯 (빈 상태)</p></figcaption></figure>
 
+### 모바일 로봇 방향
+
+모바일 로봇을 도로 위에 올려놓을 때, 반드시 <mark style="background-color:purple;">**카메라가 왼쪽을 향하도록**</mark> 똑바르게 놓아야 합니다.
+
+> 올바른 방향
+
+<figure><img src=".gitbook/assets/correct_direction.jpg" alt=""><figcaption><p>카메라가 왼쪽을 향하도록 똑바르게 놓아주세요</p></figcaption></figure>
+
+> 잘못된 방향
+
+{% hint style="danger" %}
+**주의사항**
+
+아래와 같이 로봇을 삐뚤하게 놓으면 정상적으로 동작하지 않습니다. 반드시 카메라가 왼쪽을 향하도록 똑바르게 놓아주세요.
+{% endhint %}
+
+<figure><img src=".gitbook/assets/wrong_direction_1.jpg" alt=""><figcaption><p>잘못된 방향 — 로봇이 삐뚤하게 놓여 있음</p></figcaption></figure>
+
+<figure><img src=".gitbook/assets/wrong_direction_2.jpg" alt=""><figcaption><p>잘못된 방향 — 카메라가 올바른 방향을 향하지 않음</p></figcaption></figure>
+
 ### 충전
 
 <figure><img src=".gitbook/assets/IMG_7959.jpg" alt=""><figcaption><p>모바일 로봇 2대가 충전 도크에 거치된 모습</p></figcaption></figure>
