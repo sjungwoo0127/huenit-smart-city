@@ -121,7 +121,7 @@ _추후 업데이트 예정_
 
 > 올바른 방향
 
-<figure><img src=".gitbook/assets/correct_direction.jpg" alt=""><figcaption><p>카메라가 왼쪽을 향하도록 똑바르게 놓아주세요</p></figcaption></figure>
+<figure><img src=".gitbook/assets/IMG_7958.jpg" alt=""><figcaption><p>올바른 방향 — 카메라가 왼쪽을 향하도록 똑바르게 놓아주세요</p></figcaption></figure>
 
 > 잘못된 방향
 
@@ -131,9 +131,9 @@ _추후 업데이트 예정_
 아래와 같이 로봇을 삐뚤하게 놓으면 정상적으로 동작하지 않습니다. 반드시 카메라가 왼쪽을 향하도록 똑바르게 놓아주세요.
 {% endhint %}
 
-<figure><img src=".gitbook/assets/wrong_direction_1.jpg" alt=""><figcaption><p>잘못된 방향 — 로봇이 삐뚤하게 놓여 있음</p></figcaption></figure>
+<figure><img src=".gitbook/assets/IMG_7956.jpg" alt=""><figcaption><p>X — 잘못된 방향 (로봇이 삐뚤하게 놓여 있음)</p></figcaption></figure>
 
-<figure><img src=".gitbook/assets/wrong_direction_2.jpg" alt=""><figcaption><p>잘못된 방향 — 카메라가 올바른 방향을 향하지 않음</p></figcaption></figure>
+<figure><img src=".gitbook/assets/IMG_7957.jpg" alt=""><figcaption><p>X — 잘못된 방향 (카메라가 올바른 방향을 향하지 않음)</p></figcaption></figure>
 
 ### 충전
 
