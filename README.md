@@ -148,18 +148,8 @@ _추후 업데이트 예정_
 4. 전원을 다시 연결합니다.
 {% endhint %}
 
-### Step 1
+사용 방법은 아래 페이지에서 단계별로 확인할 수 있습니다.
 
-_추후 업데이트 예정_
-
-### Step 2
-
-_추후 업데이트 예정_
-
-### Step 3
-
-_추후 업데이트 예정_
-
-### Step 4
-
-_추후 업데이트 예정_
+{% content-ref url="undefined.md" %}
+[undefined.md](undefined.md)
+{% endcontent-ref %}
