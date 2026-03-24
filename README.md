@@ -109,8 +109,6 @@
 
 모바일 로봇은 사용자가 코딩한 명령에 따라 스마트 시티의 도로 위를 주행합니다.
 
-<figure><img src=".gitbook/assets/IMG_7956.jpg" alt=""><figcaption><p>모바일 로봇 (AI 카메라 장착 상태)</p></figcaption></figure>
-
 ### 모바일 로봇 구성 요소
 
 <figure><img src=".gitbook/assets/IMG_7940.jpg" alt=""><figcaption><p>충전 단자, 리셋 버튼, C타입 단자 위치</p></figcaption></figure>
@@ -129,9 +127,9 @@
 카메라를 끼울 때 반드시 **꽉 끼워주세요.** 대부분의 문제가 카메라가 제대로 장착되지 않아서 발생합니다. 사용 후에는 카메라를 빼서 보관해 주세요.
 {% endhint %}
 
-<figure><img src=".gitbook/assets/IMG_7963.jpg" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/IMG_7963.jpg" alt=""><figcaption><p>Ai 카메라가 장착된 모습</p></figcaption></figure>
 
-### 모바일 로봇 방향
+### 일 로봇 방향
 
 모바일 로봇을 도로 위에 올려놓을 때, 반드시 <mark style="background-color:purple;">**카메라가 왼쪽을 향하도록**</mark> 똑바르게 놓아야 합니다.
 
