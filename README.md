@@ -1,12 +1,12 @@
-# 휴닛 스마트 시티
+# 스마트 시티
 
 ## 휴닛 스마트 시티란?
 
 학생들이 <mark style="background-color:purple;">**직접 코딩한 명령에 따라 모바일 로봇이 도시 위를 주행**</mark>하며 다양한 미션을 수행하는 교육용 스마트 시티입니다.
 
-모바일 로봇에 장착된 AI 카메라를 활용하여 도시 환경을 인식하고, 사용자가 작성한 코드에 따라 자율적으로 움직이며 미션을 완수합니다. 미션의 성공 여부는 미션 렘프의 색상을 통해 즉각적으로 확인할 수 있어, 코딩과 로봇 제어의 결과를 바로 학습할 수 있도록 설계되었습니다.
+모바일 로봇에 장착된 AI 카메라를 활용하여 신호등을 인식하고, 사용자가 작성한 코드에 따라 자율적으로 움직이며 미션을 완수합니다. 미션의 성공 여부는 미션 렘프의 색상을 통해 즉각적으로 확인할 수 있어, 코딩과 로봇 제어의 결과를 바로 학습할 수 있도록 설계되었습니다.
 
-<figure><img src=".gitbook/assets/IMG_7964.jpg" alt=""><figcaption><p><strong>HUENIT SMART CITY(휴닛 스마트 시티)</strong></p></figcaption></figure>
+<figure><img src=".gitbook/assets/IMG_7964.jpg" alt=""><figcaption><p><strong>SMART CITY(스마트 시티)</strong></p></figcaption></figure>
 
 ## 스마트 시티 스펙
 
@@ -26,11 +26,9 @@
 * 터치 모니터 X 1개
 * 미니 PC X 1개
 
-<figure><img src=".gitbook/assets/IMG_7937.jpg" alt=""><figcaption><p>스마트 시티 테이블 정면</p></figcaption></figure>
-
 > 크기
 
-_추후 업데이트 예정_
+<figure><img src=".gitbook/assets/IMG_7937.jpg" alt=""><figcaption><p>스마트 시티 테이블 정면</p></figcaption></figure>
 
 ### 전원 및 네트워크 안내
 
@@ -43,10 +41,12 @@ _추후 업데이트 예정_
 {% hint style="info" %}
 **소프트웨어 업데이트 안내**
 
-스마트 시티는 인터넷이 연결되어 있으면 자동으로 소프트웨어를 업데이트합니다. 안정적인 인터넷 연결을 항상 유지해 주세요.
+스마트 시티는 인터넷이 연결되어 있으면 자동으로 소프트웨어를 업데이트합니다.
 {% endhint %}
 
 > 초기 세팅
+
+
 
 {% hint style="danger" %}
 **주의사항**
@@ -162,4 +162,3 @@ _추후 업데이트 예정_
 3. 리니어 벨트를 **초기 세팅 위치**(신호등 쪽)로 밀어놓습니다.
 4. 전원을 다시 연결합니다.
 {% endhint %}
-
