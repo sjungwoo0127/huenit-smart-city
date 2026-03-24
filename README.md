@@ -61,9 +61,15 @@
 스마트 시티의 초기 세팅은 반드시 전원이 꺼진 상태에서 설정해야 합니다. 전원이 켜진 상태에서 리니어 벨트를 이동시키면 고장의 원인이 될 수 있으니 주의하십시오.
 {% endhint %}
 
-> 전원 연결시 초기 위치로 이동&#x20;
+> (스마트 시티)전원 연결시 초기 위치로 이동
 
-스마트 시티는 전원을 연결하면, 자동으로 키오스크에서 앱이 자동으로 실행 되며, 스마트 시티의 리니어 벨트가 자동으로 초기 위치로 이동합니다. 이 과정은 약 2분정도 소요됩니다.
+스마트 시티는 전원을 연결하면,  스마트 시티의 리니어 벨트가 자동으로 초기 위치로 이동합니다.  이 과정은 약 1분정도 소요됩니다.
+
+
+
+> (키오스크) 전원 연결시 앱 자동 실
+
+키오스크의 전원을 연결하면, 자동으로 키오스크에서 앱이 자동으로 실행 됩니다.이 과정은 약 2분정도 소요됩니다.
 
 {% embed url="https://youtu.be/oRhPqHK9rAo" %}
 
@@ -95,7 +101,7 @@
 
 <figure><img src=".gitbook/assets/IMG_7962.jpg" alt=""><figcaption><p>미션 성공 시 초록색으로 점등</p></figcaption></figure>
 
-<figure><img src=".gitbook/assets/IMG_7960.jpg" alt=""><figcaption><p>미션 실행 중 주황색으로 점등</p></figcaption></figure>
+<figure><img src=".gitbook/assets/IMG_7960.jpg" alt=""><figcaption><p>미션 실행 중 주황색으로 깜빡</p></figcaption></figure>
 
 <figure><img src=".gitbook/assets/IMG_7961.jpg" alt=""><figcaption><p>미션 실패 시 빨간색으로 점등</p></figcaption></figure>
 
@@ -105,7 +111,7 @@
 
 <figure><img src=".gitbook/assets/IMG_7956.jpg" alt=""><figcaption><p>모바일 로봇 (AI 카메라 장착 상태)</p></figcaption></figure>
 
-### 구성 요소
+### 모바일 로봇 구성 요소
 
 <figure><img src=".gitbook/assets/IMG_7940.jpg" alt=""><figcaption><p>충전 단자, 리셋 버튼, C타입 단자 위치</p></figcaption></figure>
 
@@ -123,7 +129,7 @@
 카메라를 끼울 때 반드시 **꽉 끼워주세요.** 대부분의 문제가 카메라가 제대로 장착되지 않아서 발생합니다. 사용 후에는 카메라를 빼서 보관해 주세요.
 {% endhint %}
 
-<figure><img src=".gitbook/assets/IMG_7963.jpg" alt=""><figcaption><p>AI 카메라 슬롯 (빈 상태)</p></figcaption></figure>
+<figure><img src=".gitbook/assets/IMG_7963.jpg" alt=""><figcaption></figcaption></figure>
 
 ### 모바일 로봇 방향
 
@@ -168,7 +174,7 @@
 **리니어 벨트 문제 발생 시**
 
 1. 전원을 분리합니다.
-2. 10초 정도 기다립니다.
+2. 30초 정도 기다립니다.
 3. 리니어 벨트를 **초기 세팅 위치**(신호등 쪽)로 밀어놓습니다.
 4. 전원을 다시 연결합니다.
 {% endhint %}
