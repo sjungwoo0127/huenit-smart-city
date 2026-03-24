@@ -28,15 +28,17 @@
 
 > 크기
 
-<figure><img src=".gitbook/assets/IMG_7937.jpg" alt=""><figcaption><p>스마트 시티 테이블 정면</p></figcaption></figure>
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 ### 전원 및 네트워크 안내
 
-<figure><img src=".gitbook/assets/IMG_7943.jpg" alt=""><figcaption><p>전원 케이블 연결 위치</p></figcaption></figure>
+<div><figure><img src=".gitbook/assets/IMG_7943.jpg" alt="" width="375"><figcaption><p>전원 케이블 연결 위치</p></figcaption></figure> <figure><img src=".gitbook/assets/IMG_7946.jpg" alt="" width="375"><figcaption><p>와이파이 공유기</p></figcaption></figure></div>
 
 휴닛 스마트 시티는 <mark style="background-color:purple;">**총 두 개의 전원 케이블을 연결하면 자동으로 전원이 켜집니다.**</mark> 모바일 로봇을 포함한 모든 장치는 와이파이로 통신하며 동작합니다.
 
-<figure><img src=".gitbook/assets/IMG_7946.jpg" alt=""><figcaption><p>와이파이 공유기</p></figcaption></figure>
+흰색 케이블은 스마트 시티의 전원이고, 검정색은 키오스크의 전원입니다. 전원을 끈 후에는 완전히 꺼질 때 까지 최소 30초를 기다려야 합니다.
+
+전원을 켜기 전에 스마트 팩토리의 모든 자이가 초기 위치에 있는지 반드시 확인해야 합니다. 초기 위치에 놓이지 않은 상태에서 전원을 켜면 장치 오작동이 발생할 수 있으니 주의 바랍니다.
 
 {% hint style="info" %}
 **소프트웨어 업데이트 안내**
@@ -44,9 +46,14 @@
 스마트 시티는 인터넷이 연결되어 있으면 자동으로 소프트웨어를 업데이트합니다.
 {% endhint %}
 
-> 초기 세팅
+> 초기 위치 세팅
 
+1. 리니어 벨트를 신호등 쪽으로 밀어놓습니다.
+2. 전원 연결 시 미션 렘프 및 신호등이 잠시 깜빡입니다. 깜빡임이 끝나면 정상 작동 상태입니다.
 
+{% embed url="https://youtu.be/0JGxthl75mU" %}
+리니어 벨트 초기 위치 세팅 방법
+{% endembed %}
 
 {% hint style="danger" %}
 **주의사항**
@@ -54,8 +61,11 @@
 스마트 시티의 초기 세팅은 반드시 전원이 꺼진 상태에서 설정해야 합니다. 전원이 켜진 상태에서 리니어 벨트를 이동시키면 고장의 원인이 될 수 있으니 주의하십시오.
 {% endhint %}
 
-1. 리니어 벨트를 신호등 쪽으로 밀어놓습니다.
-2. 전원 연결 시 미션 렘프 및 신호등이 잠시 깜빡입니다. 깜빡임이 끝나면 정상 작동 상태입니다.
+> 전원 연결시 초기 위치로 이동&#x20;
+
+스마트 시티는 전원을 연결하면, 자동으로 키오스크에서 앱이 자동으로 실행 되며, 스마트 시티의 리니어 벨트가 자동으로 초기 위치로 이동합니다. 이 과정은 약 2분정도 소요됩니다.
+
+{% embed url="https://youtu.be/oRhPqHK9rAo" %}
 
 > 맵 색상 안내
 
@@ -73,7 +83,7 @@
 
 *   **터치 모니터**
 
-    사용자가 직접 조작할 수 있는 소프트웨어로, 모바일 로봇을 코딩하고 미션을 제어하거나 설정하는 데 사용됩니다. 모바일 로봇의 주행 상태와 미션 진행 상황을 실시간으로 확인할 수 있어 사용자 중심의 인터랙티브한 경험을 제공합니다.
+    학생이&#x20;
 
 ## 미션 렘프
 
