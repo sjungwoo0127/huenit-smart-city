@@ -12,11 +12,21 @@
 
 코딩 방법은 Python 코딩 가이드에 따라서 합니다.
 
+{% hint style="info" %}
+휴닛렙 설치 가이드: [https://huenit.gitbook.io/huenit-1/huenit/huenit-lab/0./huenit-lab](https://huenit.gitbook.io/huenit-1/huenit/huenit-lab/0./huenit-lab)
+{% endhint %}
+
 <figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 ## STEP 2 — AI 카메라에 업로드
 
 코딩이 완료된 후 HUENIT\_LAB에서 AI 카메라에 업로드 합니다.
+
+{% hint style="warning" %}
+&#x20;카메라의 펌웨어 버전을 업데이트 하지 않도록 주의해야 합니. 휴닛 렙을 통하여 카메라의 펌웨어를 업데이트 하면 스마트 시티의 코드가 동작하지 않을 수 있습니다.
+{% endhint %}
+
+<figure><img src=".gitbook/assets/image (2).png" alt="" width="350"><figcaption></figcaption></figure>
 
 ## STEP 3 — 모바일 로봇 연결
 
