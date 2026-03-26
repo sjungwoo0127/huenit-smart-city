@@ -98,45 +98,40 @@ result = run_all_missions()
 gc.collect()
 ```
 
-### 구조 설명
+### 어디를 수정해야 하나요?
 
-| 부분 | 역할 | 수정 여부 |
-|------|------|-----------|
-| `import` | 필요한 모듈 불러오기 | 수정하지 마세요 |
-| `mission1()` ~ `mission4()` | 각 미션의 동작 코드 | **여기만 수정하세요** |
-| `mission_start` / `mission_complete` | 서버에 미션 시작/완료를 알림 | 수정하지 마세요 |
-| `wait_for_start_command()` | 키오스크에서 시작 버튼을 누를 때까지 대기 | 수정하지 마세요 |
-| `run_all_missions()` | mission1~4를 순서대로 실행, 실패 시 중단 | 수정하지 마세요 |
-| 메인 실행 | 로봇 연결 → 시작 대기 → 미션 실행 → 정리 | 수정하지 마세요 |
+| 부분 | 설명 | 수정해도 되나요? |
+|------|------|:---:|
+| `import` 부분 | 필요한 모듈을 불러옵니다 | X |
+| `mission1()` ~ `mission4()` 함수 | 각 미션에서 로봇이 할 동작을 적는 곳 | **O (여기만!)** |
+| `mission_start` / `mission_complete` | 서버에 "미션 시작/끝"을 알려줍니다 | X |
+| `wait_for_start_command()` | 키오스크에서 시작 버튼을 누를 때까지 기다립니다 | X |
+| `run_all_missions()` | mission1→2→3→4 순서대로 실행합니다 | X |
+| 메인 실행 부분 | 로봇 연결 → 대기 → 실행 → 정리 | X |
 
 {% hint style="info" %}
 **핵심 포인트**
 
 - 미션은 항상 **1 → 2 → 3 → 4** 순서로 실행됩니다
-- 어떤 미션에서든 실패(배터리 부족 등)하면 `MissionError`가 발생하여 나머지 미션을 건너뜁니다
-- 여러분이 작성하는 코드는 각 `mission` 함수의 `# TODO` 부분에 들어갑니다
+- 도중에 실패하면 나머지 미션은 자동으로 건너뜁니다
+- 여러분이 코드를 적는 곳은 각 `mission` 함수의 `# TODO` 부분뿐입니다
 {% endhint %}
 
 ---
 
-## 2. run\_command - 명령 실행 패턴
+## 2. 명령을 내리는 방법 — run\_command
 
-미션 함수 안에서 로봇에 명령을 내릴 때는 `run_command`를 사용합니다:
+로봇에게 "전진해!", "회전해!" 같은 명령을 내릴 때는 항상 `run_command`를 사용합니다.
 
 ```python
-mobile_robot.run_command(실행할_함수, "실패 시 메시지", 인자1, 인자2, ...)
+mobile_robot.run_command(실행할_명령, "실패했을 때 보여줄 메시지", 추가값1, 추가값2, ...)
 ```
 
-**동작 방식:**
-
-- 성공 → 다음 줄로 진행
-- 실패 → `MissionError` 예외 발생 → 해당 미션 및 이후 미션 전체 중단
-- 배터리 부족으로 서버가 거부 → 모터 정지 + LED 경고 + 미션 전체 중단
-
-**따라서 여러분이 직접 에러 처리를 작성할 필요가 없습니다.** `run_command`가 알아서 처리합니다.
+- **성공하면** → 아무 문제 없이 다음 줄로 넘어갑니다
+- **실패하면** → 자동으로 미션이 중단됩니다 (에러 처리를 직접 할 필요 없습니다)
 
 ```python
-# 예시: 2칸 전진 후 우회전 후 1칸 전진
+# 예시: 2칸 앞으로 → 오른쪽으로 회전 → 1칸 앞으로
 mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 2)
 mobile_robot.run_command(mobile_robot.mission_turn_right, "회전 실패")
 mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 1)
@@ -144,26 +139,21 @@ mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 1)
 
 ---
 
-## 3. 함수 레퍼런스
+## 3. 사용할 수 있는 명령어 모음
 
-`mobile_robot.` 접두사를 붙여서 호출합니다. (예: `mobile_robot.mission_move_forward(2)`)
+---
 
-### 3.1 이동
+### 3.1 전진 — mission\_move\_forward
 
-서버에 허가를 요청하고, 로봇이 동작을 완료할 때까지 자동 대기합니다.
+로봇이 도로 위의 선을 따라 앞으로 이동합니다.
 
-#### `mission_move_forward(cells=1)`
+**설정값:**
 
-라인트레이싱으로 지정한 칸 수만큼 전진합니다.
+| 이름 | 뜻 | 넣을 수 있는 값 | 안 넣으면 |
+|------|------|------|------|
+| `cells` | 몇 칸 앞으로 갈지 | 1 ~ 255 | 1칸 |
 
-| 파라미터 | 타입 | 설명 |
-|---------|------|------|
-| `cells` | int | 이동할 칸 수 (1\~255, 기본값 1) |
-
-| 반환값 | 설명 |
-|--------|------|
-| `(True, 에러코드)` | 성공 |
-| `(False, 에러코드)` | 실패 (배터리 부족, 타임아웃 등) |
+**예시:**
 
 ```python
 # 1칸 전진
@@ -171,139 +161,166 @@ mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 1)
 
 # 3칸 전진
 mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 3)
-```
 
-> 타임아웃: 기본 10초 + 칸당 10초 (예: 3칸 = 40초)
-
-#### `mission_turn_left(n=1)`
-
-90도씩 왼쪽으로 회전합니다.
-
-| 파라미터 | 타입 | 설명 |
-|---------|------|------|
-| `n` | int | 회전 횟수 (기본값 1, 1회 = 90도) |
-
-```python
-# 좌회전 1번 (90도)
-mobile_robot.run_command(mobile_robot.mission_turn_left, "회전 실패")
-
-# 좌회전 2번 (180도 = U턴)
-mobile_robot.run_command(mobile_robot.mission_turn_left, "회전 실패", 2)
-```
-
-#### `mission_turn_right(n=1)`
-
-90도씩 오른쪽으로 회전합니다.
-
-| 파라미터 | 타입 | 설명 |
-|---------|------|------|
-| `n` | int | 회전 횟수 (기본값 1, 1회 = 90도) |
-
-```python
-# 우회전 1번 (90도)
-mobile_robot.run_command(mobile_robot.mission_turn_right, "회전 실패")
+# 숫자를 안 넣으면 1칸 전진
+mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패")
 ```
 
 ---
 
-### 3.2 신호등 감지
+### 3.2 좌회전 — mission\_turn\_left
 
-#### `detect_traffic_light()`
+로봇이 제자리에서 왼쪽으로 90도 회전합니다.
 
-서버에 신호등 상태를 요청합니다.
+**설정값:**
 
-| 반환값 | 설명 |
-|--------|------|
-| `(True, 신호등상태)` | 감지 성공 |
-| `(False, 0xFF)` | 감지 실패 |
+| 이름 | 뜻 | 넣을 수 있는 값 | 안 넣으면 |
+|------|------|------|------|
+| `n` | 몇 번 회전할지 (1번 = 90도) | 1 이상 | 1번 (90도) |
 
-**신호등 상태값:**
-
-| 값 | 의미 |
-|----|------|
-| `0` | 빨간불 (정지) |
-| `1` | 노란불 (주의) |
-| `2` | 초록불 (통과 가능) |
-| `0xFF` | 감지 실패 |
+**예시:**
 
 ```python
-# 신호등이 초록불이 될 때까지 대기하는 패턴
+# 왼쪽으로 90도 회전
+mobile_robot.run_command(mobile_robot.mission_turn_left, "회전 실패")
+
+# 왼쪽으로 180도 회전 (U턴)
+mobile_robot.run_command(mobile_robot.mission_turn_left, "회전 실패", 2)
+```
+
+---
+
+### 3.3 우회전 — mission\_turn\_right
+
+로봇이 제자리에서 오른쪽으로 90도 회전합니다.
+
+**설정값:**
+
+| 이름 | 뜻 | 넣을 수 있는 값 | 안 넣으면 |
+|------|------|------|------|
+| `n` | 몇 번 회전할지 (1번 = 90도) | 1 이상 | 1번 (90도) |
+
+**예시:**
+
+```python
+# 오른쪽으로 90도 회전
+mobile_robot.run_command(mobile_robot.mission_turn_right, "회전 실패")
+
+# 오른쪽으로 180도 회전 (U턴)
+mobile_robot.run_command(mobile_robot.mission_turn_right, "회전 실패", 2)
+```
+
+---
+
+### 3.4 신호등 확인 — detect\_traffic\_light
+
+신호등이 무슨 색인지 확인합니다.
+
+{% hint style="warning" %}
+이 명령은 `run_command`를 쓰지 않고 **직접 호출**합니다. 신호등 색깔을 보고 판단해야 하기 때문입니다.
+{% endhint %}
+
+**신호등 색깔 값:**
+
+| 값 | 무슨 색? | 뜻 |
+|----|---------|-----|
+| `0` | 빨간불 | 정지 — 기다려야 합니다 |
+| `1` | 노란불 | 주의 |
+| `2` | 초록불 | 통과 가능 |
+| `0xFF` | — | 감지 실패 |
+
+**예시 — 초록불이 될 때까지 기다리기:**
+
+```python
 while True:
   success, traffic_state = mobile_robot.detect_traffic_light()
   if not success:
     mobile_robot.handle_mission_abort("신호등 감지 실패")
     raise mobile_robot.MissionError("신호등 감지 실패")
 
-  if traffic_state == 0:    # 빨간불
-    time.sleep(0.3)         # 잠시 대기 후 다시 확인
-  else:                     # 초록불 (또는 노란불)
-    time.sleep(3)           # 신호 안정화 대기
-    break                   # 루프 탈출 → 통과!
+  if traffic_state == 0:    # 빨간불이면
+    time.sleep(0.3)         #   잠깐 기다렸다가 다시 확인
+  else:                     # 초록불이면
+    time.sleep(3)           #   신호가 안정될 때까지 잠깐 기다린 후
+    break                   #   루프 탈출! → 이제 출발
 
-  time.sleep(0.01)          # CPU 과부하 방지
+  time.sleep(0.01)          # CPU 과부하 방지 (반드시 넣어주세요)
 ```
-
-{% hint style="info" %}
-`detect_traffic_light()`는 `run_command`를 쓰지 않고 직접 호출합니다. 반환값을 보고 판단해야 하기 때문입니다.
-{% endhint %}
 
 ---
 
-### 3.3 배터리 확인
+### 3.5 배터리 확인 — check\_battery
 
-#### `check_battery()`
+로봇의 배터리가 몇 % 남았는지 확인합니다.
 
-서버에 배터리 잔량을 요청합니다.
+{% hint style="warning" %}
+이 명령도 `run_command`를 쓰지 않고 **직접 호출**합니다.
+{% endhint %}
 
-| 반환값 | 설명 |
-|--------|------|
-| `(True, 잔량%)` | 확인 성공 (0\~100) |
+**돌아오는 값:**
+
+| 값 | 뜻 |
+|----|-----|
+| `(True, 잔량%)` | 확인 성공 (0~100 사이 숫자) |
 | `(False, 0)` | 확인 실패 |
 
+**예시 — 배터리 100%가 될 때까지 기다리기:**
+
 ```python
-# 배터리가 100%가 될 때까지 대기하는 패턴
 while True:
   success, battery_level = mobile_robot.check_battery()
   if not success:
     mobile_robot.handle_mission_abort("배터리 확인 실패")
     raise mobile_robot.MissionError("배터리 확인 실패")
 
-  if battery_level == 100:  # 충전 완료
+  if battery_level == 100:  # 100%면
     time.sleep(3)
-    break
-  else:                     # 아직 충전 중
-    pass
+    break                   #   충전 완료! 루프 탈출
+  else:                     # 아직이면
+    pass                    #   계속 확인
 
-  time.sleep(0.01)
+  time.sleep(0.01)          # CPU 과부하 방지
 ```
 
 ---
 
-### 3.4 충전
+### 3.6 충전 시작 — charge\_start
 
-#### `charge_start()`
+충전소에 도착한 뒤 충전을 시작합니다.
 
-충전소에서 충전을 시작합니다. 서버에 허가를 요청합니다.
+**설정값:** 없음
+
+**예시:**
 
 ```python
 mobile_robot.run_command(mobile_robot.charge_start, "충전 시작 실패")
 ```
 
-#### `charge_stop()`
+---
 
-충전을 종료합니다.
+### 3.7 충전 종료 — charge\_stop
+
+충전을 끝냅니다. 충전이 완료된 후에 호출합니다.
+
+**설정값:** 없음
+
+**예시:**
 
 ```python
 mobile_robot.run_command(mobile_robot.charge_stop, "충전 종료 실패")
 ```
 
-**충전 전체 흐름:**
+---
+
+### 3.8 충전 전체 흐름 (시작 → 대기 → 종료)
+
+충전은 3단계로 이루어집니다:
 
 ```python
-# 1. 충전 시작
+# 1단계: 충전 시작
 mobile_robot.run_command(mobile_robot.charge_start, "충전 시작 실패")
 
-# 2. 배터리 100%까지 대기
+# 2단계: 배터리가 100%가 될 때까지 기다리기
 while True:
   success, battery_level = mobile_robot.check_battery()
   if not success:
@@ -318,187 +335,173 @@ while True:
 
   time.sleep(0.01)
 
-# 3. 충전 종료
+# 3단계: 충전 종료
 mobile_robot.run_command(mobile_robot.charge_stop, "충전 종료 실패")
 ```
 
 ---
 
-### 3.5 버튼 제어
-
-#### `press_button_left()`
+### 3.9 왼쪽 버튼 누르기 — press\_button\_left
 
 로봇의 왼쪽 버튼을 누릅니다.
+
+**설정값:** 없음
+
+**예시:**
 
 ```python
 mobile_robot.run_command(mobile_robot.press_button_left, "왼쪽 버튼 실패")
 ```
 
-#### `press_button_right()`
+---
+
+### 3.10 오른쪽 버튼 누르기 — press\_button\_right
 
 로봇의 오른쪽 버튼을 누릅니다.
+
+**설정값:** 없음
+
+**예시:**
 
 ```python
 mobile_robot.run_command(mobile_robot.press_button_right, "오른쪽 버튼 실패")
 ```
 
-> 버튼 명령의 타임아웃은 60초입니다. 서버 응답을 길게 기다립니다.
+{% hint style="info" %}
+버튼 명령은 서버 응답을 오래 기다립니다 (최대 60초).
+{% endhint %}
 
 ---
 
-### 3.6 속도 제어
+### 3.11 속도 낮추기 — set\_speed\_low
 
-#### `set_speed_low()`
+로봇의 이동 속도를 느리게 바꿉니다. 이후의 모든 이동이 천천히 실행됩니다.
 
-로봇의 이동 속도를 낮게 설정합니다. 이후 이동 명령들이 느리게 실행됩니다.
+**설정값:** 없음
+
+**예시:**
 
 ```python
 mobile_robot.run_command(mobile_robot.set_speed_low, "속도 설정 실패")
+
+# 이제부터 느리게 이동합니다
+mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 2)
 ```
 
 ---
 
-### 3.7 에러 처리
+### 3.12 LED 제어 — led\_set
 
-#### `run_command(func, abort_reason, *args)`
+로봇의 LED를 켜거나 끄거나 깜빡이게 합니다.
 
-명령을 실행하고, 실패 시 자동으로 미션을 중단합니다.
+**설정값:**
 
-| 파라미터 | 설명 |
-|---------|------|
-| `func` | 실행할 함수 (예: `mobile_robot.mission_move_forward`) |
-| `abort_reason` | 실패 시 출력할 메시지 |
-| `*args` | 함수에 전달할 인자들 |
-
-- 성공: 아무 일 없이 다음 줄로 진행
-- 실패: `MissionError` 예외 발생 → 모터 정지 → LED 경고 → 서버에 중단 알림
-
-#### `handle_mission_abort(reason)`
-
-직접 미션을 중단할 때 사용합니다. 모터 정지 + LED 경고 + 서버 알림을 수행합니다.
-
-```python
-# 탐지 함수에서 실패 시 직접 중단 처리하는 패턴
-success, value = mobile_robot.detect_traffic_light()
-if not success:
-  mobile_robot.handle_mission_abort("신호등 감지 실패")
-  raise mobile_robot.MissionError("신호등 감지 실패")
-```
-
-#### `MissionError` 예외
-
-미션 중단 시 발생하는 예외입니다. `run_all_missions()`에서 자동으로 잡아서 처리합니다.
-
-| 속성 | 설명 |
-|------|------|
-| `reason` | 중단 사유 문자열 |
-| `error_code` | 에러 코드 |
-
----
-
-### 3.8 LED 제어
-
-미션 코드에서 시각적 피드백이 필요할 때 사용할 수 있습니다.
-
-#### `led_set(state)`
-
-LED 상태를 설정합니다.
-
-| state 값 | 상수명 | 동작 |
-|----------|--------|------|
-| `0` | `LED_OFF` | LED 끄기 |
-| `1` | `LED_ON` | LED 켜기 |
+| 넣는 값 | 이름 | LED가 어떻게 되나요? |
+|---------|------|-------------------|
+| `0` | `LED_OFF` | 꺼짐 |
+| `1` | `LED_ON` | 켜짐 |
 | `2` | `LED_BLINK_SLOW` | 느리게 깜빡임 |
 | `3` | `LED_BLINK_FAST` | 빠르게 깜빡임 |
 
-```python
-mobile_robot.led_set(mobile_robot.LED_ON)       # LED 켜기
-mobile_robot.led_set(mobile_robot.LED_OFF)      # LED 끄기
-```
-
-#### `led_blink(on_ms, off_ms, count)`
-
-LED 깜빡임 패턴을 설정합니다.
-
-| 파라미터 | 설명 |
-|---------|------|
-| `on_ms` | 켜짐 시간 (밀리초) |
-| `off_ms` | 꺼짐 시간 (밀리초) |
-| `count` | 반복 횟수 |
+**예시:**
 
 ```python
-mobile_robot.led_blink(200, 200, 5)  # 0.2초 간격으로 5번 깜빡
+# LED 켜기
+mobile_robot.led_set(mobile_robot.LED_ON)
+
+# LED 끄기
+mobile_robot.led_set(mobile_robot.LED_OFF)
+
+# LED 느리게 깜빡이기
+mobile_robot.led_set(mobile_robot.LED_BLINK_SLOW)
 ```
 
 ---
 
-### 3.9 저수준 모터 제어 (고급)
+### 3.13 LED 깜빡임 패턴 — led\_blink
+
+LED를 원하는 패턴으로 깜빡이게 합니다.
+
+**설정값:**
+
+| 이름 | 뜻 | 예시 |
+|------|------|------|
+| `on_ms` | LED가 켜져 있는 시간 (밀리초) | 200 = 0.2초 |
+| `off_ms` | LED가 꺼져 있는 시간 (밀리초) | 200 = 0.2초 |
+| `count` | 몇 번 깜빡일지 | 5 = 5번 |
+
+**예시:**
+
+```python
+# 0.2초 간격으로 5번 깜빡이기
+mobile_robot.led_blink(200, 200, 5)
+
+# 1초 간격으로 3번 깜빡이기
+mobile_robot.led_blink(1000, 1000, 3)
+```
+
+---
+
+### 3.14 저수준 모터 제어 (고급)
 
 {% hint style="warning" %}
-일반적으로 사용하지 않습니다. 미션 명령(`mission_move_forward` 등)은 서버 허가 + 라인트레이싱이 포함되어 있지만, 아래 함수들은 로봇 모터를 직접 제어하므로 라인트레이싱 없이 동작합니다.
+**일반적으로 사용하지 않습니다.** 위의 `mission_move_forward` 같은 명령은 서버 허가 + 라인트레이싱이 포함되어 있지만, 아래 함수들은 로봇 모터를 직접 제어하므로 선을 따라가지 않습니다.
 {% endhint %}
 
-| 함수 | 설명 |
+| 함수 | 뜻 |
 |------|------|
-| `move_forward(speed_us=500, steps=None)` | 직접 전진 (steps=None이면 연속 이동) |
+| `move_forward(speed_us=500, steps=None)` | 직접 전진 (steps 없으면 계속 이동) |
 | `move_backward(speed_us=500, steps=None)` | 직접 후진 |
-| `turn_left(speed_us=800)` | 직접 좌회전 (연속 회전, stop() 필요) |
-| `turn_right(speed_us=800)` | 직접 우회전 (연속 회전, stop() 필요) |
+| `turn_left(speed_us=800)` | 직접 좌회전 (계속 회전, `stop()` 필요) |
+| `turn_right(speed_us=800)` | 직접 우회전 (계속 회전, `stop()` 필요) |
 | `stop()` | 모터 즉시 정지 |
-| `motor_move(motor, steps, speed_us)` | 특정 모터 스텝 이동 |
-| `motor_stop(motor)` | 특정 모터 정지 |
-| `motor_continuous(left_speed_us, right_speed_us)` | 양쪽 모터 연속 회전 |
 
-**모터 선택 상수:**
-
-| 상수 | 값 | 설명 |
-|------|---|------|
-| `MOTOR_LEFT` | 0 | 왼쪽 모터 |
-| `MOTOR_RIGHT` | 1 | 오른쪽 모터 |
-| `MOTOR_BOTH` | 2 | 양쪽 모터 |
-
-> `speed_us`는 스텝 간 딜레이(마이크로초)입니다. **값이 작을수록 빠릅니다.**
+> `speed_us`는 값이 **작을수록 빠릅니다.**
 
 ---
 
-## 4. 미션별 사용 가능 함수 요약
+## 4. 미션별 예시 코드
 
 각 미션에서 사용할 수 있는 함수가 정해져 있습니다.
 
+---
+
 ### 미션 1: 신호등 & 이동
 
-| 함수 | 용도 |
-|------|------|
-| `mission_move_forward(cells)` | N칸 전진 (1\~4) |
-| `mission_turn_right()` | 90도 우회전 |
-| `mission_turn_left()` | 90도 좌회전 |
-| `detect_traffic_light()` | 신호등 상태 확인 (0=빨강, 2=초록) |
+**사용 가능 함수:**
 
-**미션 1 예시 — 신호등 교차로 통과:**
+| 함수 | 한 줄 설명 |
+|------|----------|
+| `mission_move_forward(칸 수)` | 앞으로 이동 |
+| `mission_turn_right()` | 오른쪽 회전 |
+| `mission_turn_left()` | 왼쪽 회전 |
+| `detect_traffic_light()` | 신호등 확인 |
+
+**예시 — 신호등 교차로 통과:**
 
 ```python
 def mission1():
   mobile_robot.run_command(mobile_robot.mission_start, "미션1 시작 실패", 1)
 
-  # 교차로까지 이동
+  # 교차로까지 1칸 전진
   mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 1)
 
-  # 신호등 대기
+  # 초록불이 될 때까지 기다리기
   while True:
     success, traffic_state = mobile_robot.detect_traffic_light()
     if not success:
       mobile_robot.handle_mission_abort("신호등 감지 실패")
       raise mobile_robot.MissionError("신호등 감지 실패")
 
-    if traffic_state == 0:    # 빨간불 → 대기
+    if traffic_state == 0:    # 빨간불 → 기다림
       time.sleep(0.3)
-    else:                     # 초록불 → 통과
+    else:                     # 초록불 → 출발!
       time.sleep(3)
       break
 
     time.sleep(0.01)
 
-  # 교차로 통과 후 이동
+  # 교차로 지나서 이동
   mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 2)
   mobile_robot.run_command(mobile_robot.mission_turn_right, "회전 실패")
   mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 1)
@@ -510,16 +513,18 @@ def mission1():
 
 ### 미션 2: 충전소 & 배터리
 
-| 함수 | 용도 |
-|------|------|
-| `mission_move_forward(cells)` | N칸 전진 (1\~4) |
-| `mission_turn_right()` | 90도 우회전 |
-| `mission_turn_left()` | 90도 좌회전 |
+**사용 가능 함수:**
+
+| 함수 | 한 줄 설명 |
+|------|----------|
+| `mission_move_forward(칸 수)` | 앞으로 이동 |
+| `mission_turn_right()` | 오른쪽 회전 |
+| `mission_turn_left()` | 왼쪽 회전 |
 | `charge_start()` | 충전 시작 |
 | `charge_stop()` | 충전 종료 |
-| `check_battery()` | 배터리 잔량 확인 (0\~100%) |
+| `check_battery()` | 배터리 잔량 확인 |
 
-**미션 2 예시 — 충전소에서 충전:**
+**예시 — 충전소에서 충전하기:**
 
 ```python
 def mission2():
@@ -533,7 +538,7 @@ def mission2():
   # 충전 시작
   mobile_robot.run_command(mobile_robot.charge_start, "충전 시작 실패")
 
-  # 배터리 100%까지 대기
+  # 100%가 될 때까지 기다리기
   while True:
     success, battery_level = mobile_robot.check_battery()
     if not success:
@@ -548,7 +553,7 @@ def mission2():
 
     time.sleep(0.01)
 
-  # 충전 종료 후 출발
+  # 충전 끝내고 출발
   mobile_robot.run_command(mobile_robot.charge_stop, "충전 종료 실패")
   mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 1)
 
@@ -557,23 +562,25 @@ def mission2():
 
 ---
 
-### 미션 3: 로봇 버튼 제어
+### 미션 3: 버튼 조작
 
-| 함수 | 용도 |
-|------|------|
-| `mission_move_forward(cells)` | N칸 전진 (1\~4) |
-| `mission_turn_right()` | 90도 우회전 |
-| `mission_turn_left()` | 90도 좌회전 |
-| `press_button_left()` | 로봇 왼쪽 버튼 누르기 |
-| `press_button_right()` | 로봇 오른쪽 버튼 누르기 |
+**사용 가능 함수:**
 
-**미션 3 예시 — 버튼 조작:**
+| 함수 | 한 줄 설명 |
+|------|----------|
+| `mission_move_forward(칸 수)` | 앞으로 이동 |
+| `mission_turn_right()` | 오른쪽 회전 |
+| `mission_turn_left()` | 왼쪽 회전 |
+| `press_button_left()` | 왼쪽 버튼 누르기 |
+| `press_button_right()` | 오른쪽 버튼 누르기 |
+
+**예시 — 버튼 누르기:**
 
 ```python
 def mission3():
   mobile_robot.run_command(mobile_robot.mission_start, "미션3 시작 실패", 3)
 
-  # 제어 지점까지 이동
+  # 버튼이 있는 곳까지 이동
   mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 3)
   mobile_robot.run_command(mobile_robot.mission_turn_left, "회전 실패")
   mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패", 1)
@@ -594,25 +601,29 @@ def mission3():
 
 ### 미션 4: 속도 제어 & 반복
 
-| 함수 | 용도 |
-|------|------|
-| `mission_move_forward()` | 1칸 전진 |
-| `mission_turn_right()` | 90도 우회전 |
-| `mission_turn_left()` | 90도 좌회전 |
-| `set_speed_low()` | 속도 낮게 설정 |
+**사용 가능 함수:**
 
-> Python의 `for` 반복문을 활용할 수 있습니다.
+| 함수 | 한 줄 설명 |
+|------|----------|
+| `mission_move_forward()` | 앞으로 이동 |
+| `mission_turn_right()` | 오른쪽 회전 |
+| `mission_turn_left()` | 왼쪽 회전 |
+| `set_speed_low()` | 속도를 느리게 |
 
-**미션 4 예시 — 속도 조절 + 반복 이동:**
+{% hint style="info" %}
+Python의 `for` 반복문을 활용하면 같은 동작을 여러 번 반복할 수 있습니다!
+{% endhint %}
+
+**예시 — 속도 조절 + 반복 이동:**
 
 ```python
 def mission4():
   mobile_robot.run_command(mobile_robot.mission_start, "미션4 시작 실패", 4)
 
-  # 속도 낮게 설정
+  # 속도를 느리게 설정
   mobile_robot.run_command(mobile_robot.set_speed_low, "속도 설정 실패")
 
-  # 2번 반복: 전진 → 우회전
+  # "전진 → 우회전"을 2번 반복
   for i in range(2):
     mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패")
     mobile_robot.run_command(mobile_robot.mission_turn_right, "회전 실패")
@@ -628,55 +639,51 @@ def mission4():
 
 ## 5. 에러 코드 정리
 
-`run_command` 사용 시 내부에서 자동 처리되지만, 직접 함수를 호출할 때 참고합니다.
+`run_command`가 자동으로 처리해주지만, 참고로 알아두면 좋습니다.
 
-| 코드 | 이름 | 의미 |
-|------|------|------|
-| `0x00` | `ErrorCode.NONE` | 성공 |
-| `0x01` | `ErrorCode.TIMEOUT` | 타임아웃 (응답 없음) |
-| `0x02` | `ErrorCode.INVALID_MSG` | 잘못된 메시지 |
-| `0x03` | `ErrorCode.UART_FAIL` | UART 통신 실패 |
-| `0x06` | `ErrorCode.SERVER_FAIL` | 서버 거부 (배터리 부족 포함) |
+| 코드 | 이름 | 무슨 뜻? |
+|------|------|---------|
+| `0x00` | 성공 | 명령이 잘 실행됨 |
+| `0x01` | 타임아웃 | 응답이 너무 오래 안 옴 |
+| `0x02` | 잘못된 메시지 | 보낸 메시지가 올바르지 않음 |
+| `0x03` | 통신 실패 | UART 통신에 문제 발생 |
+| `0x06` | 서버 거부 | 배터리 부족 등으로 서버가 거절 |
 
 ---
 
-## 6. 주의사항
+## 6. 꼭 지켜야 할 규칙
 
 {% hint style="danger" %}
-**반드시 지켜야 할 규칙**
+**중요한 규칙 4가지**
 
-1. **들여쓰기**: 미션 함수 안의 코드는 **스페이스 2칸**으로 들여쓰기합니다.
-2. **순서 실행**: 모든 명령은 위에서 아래로 순서대로 실행됩니다. 이전 명령이 완료되어야 다음 명령이 실행됩니다.
-3. **`mission_start` / `mission_complete`**: 각 미션 함수의 맨 처음과 맨 끝에 반드시 있어야 합니다. 템플릿에 이미 포함되어 있으니 지우지 마세요.
-4. **루프 안의 `time.sleep(0.01)`**: `while True` 루프 안에서 CPU 과부하를 방지하기 위해 반드시 넣어주세요.
+1. **들여쓰기는 스페이스 2칸** — 미션 함수 안의 코드는 반드시 2칸 들여쓰기
+2. **순서대로 실행** — 위의 명령이 끝나야 아래 명령이 실행됩니다
+3. **mission\_start / mission\_complete 지우지 마세요** — 각 미션 함수의 첫 줄과 마지막 줄에 이미 들어있습니다
+4. **while 루프 안에 `time.sleep(0.01)` 넣기** — 안 넣으면 CPU에 과부하가 걸립니다
 {% endhint %}
 
 {% hint style="info" %}
-**알아두면 좋은 정보**
+**타임아웃 시간 안내**
 
-- **배터리 부족**: 서버가 배터리 부족을 감지하면 `run_command`가 자동으로 미션을 중단합니다. 직접 처리할 필요 없습니다.
-- **타임아웃 기본값**:
-  - 전진: 10초 + 칸당 10초 (예: 3칸 → 40초)
-  - 회전: 회전당 10초
-  - 버튼: 60초
-  - 충전/신호등/배터리 확인: 5초
-- **`detect_traffic_light()` / `check_battery()`**: 이 두 함수는 `run_command`를 쓰지 않고 직접 호출합니다. 반환값으로 판단해야 하기 때문입니다. 실패 시 `handle_mission_abort()` + `raise MissionError()`로 직접 중단 처리합니다.
+| 명령 | 최대 대기 시간 |
+|------|-------------|
+| 전진 | 10초 + 칸당 10초 (예: 3칸 = 40초) |
+| 회전 | 회전당 10초 |
+| 버튼 | 60초 |
+| 충전/신호등/배터리 | 5초 |
 {% endhint %}
 
 ---
 
 ## 7. 정답 코드
 
-아래는 모든 미션을 정상 완료하는 전체 정답 코드입니다.
-템플릿을 복사한 뒤, 각 `mission` 함수의 `# TODO` 부분을 아래 내용으로 채워 넣으면 됩니다.
-
 ### 미션별 정답 경로 요약
 
 | 미션 | 동작 순서 |
 |------|----------|
-| **1** | 4칸 전진 → **신호등 대기**(빨간불: 대기, 초록불: 통과) → 3칸 전진 → 우회전 → 1칸 전진 |
-| **2** | 1칸 전진 → 우회전 → 1칸 전진 → 우회전x2(U턴) → **충전 시작** → 배터리 100% 대기 → **충전 종료** → 1칸 전진 → 우회전 → 1칸 전진 |
-| **3** | 1칸 전진 → 우회전 → 3칸 전진 → 우회전 → 1칸 전진 → **왼쪽 버튼** → 1칸 전진 → **오른쪽 버튼** → 우회전x2(U턴) → 1칸 전진 → 우회전 → 1칸 전진 |
+| **1** | 4칸 전진 → **신호등 대기** → 3칸 전진 → 우회전 → 1칸 전진 |
+| **2** | 1칸 전진 → 우회전 → 1칸 전진 → U턴 → **충전** → 1칸 전진 → 우회전 → 1칸 전진 |
+| **3** | 1칸 전진 → 우회전 → 3칸 전진 → 우회전 → 1칸 전진 → **왼쪽 버튼** → 1칸 전진 → **오른쪽 버튼** → U턴 → 1칸 전진 → 우회전 → 1칸 전진 |
 | **4** | 1칸 전진 → 우회전 → 2번 반복(**속도 낮게** + 1칸 전진) |
 
 ### 전체 정답 코드 (복사용)
@@ -703,12 +710,12 @@ def mission1():
       mobile_robot.handle_mission_abort("신호등 감지 실패")
       raise mobile_robot.MissionError("신호등 감지 실패")
 
-    if traffic_state == 0:    # 빨간불
+    if traffic_state == 0:
       time.sleep(0.3)
-      pass                    # 계속 탐지
-    else:                     # 초록불
+      pass
+    else:
       time.sleep(0.5)
-      break                   # 탐지 종료, 통과!
+      break
 
     time.sleep(0.3)
 
@@ -741,12 +748,12 @@ def mission2():
       mobile_robot.handle_mission_abort("배터리 감지 실패")
       raise mobile_robot.MissionError("배터리 감지 실패")
 
-    if battery_state == 100:  # 충전 완료
+    if battery_state == 100:
       time.sleep(0.3)
       time.sleep(0.5)
-      break                   # 탐지 종료
-    else:                     # 아직 충전 중
-      pass                    # 계속 탐지
+      break
+    else:
+      pass
 
     time.sleep(0.3)
 
@@ -799,7 +806,7 @@ def mission4():
   mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패")
   mobile_robot.run_command(mobile_robot.mission_turn_right, "회전 실패")
 
-  # 2번 반복: 속도 낮게 설정 → 1칸 전진
+  # 2번 반복: 속도 낮게 + 1칸 전진
   for i in range(2):
     mobile_robot.run_command(mobile_robot.set_speed_low, "속도 설정 실패")
     mobile_robot.run_command(mobile_robot.mission_move_forward, "전진 실패")
