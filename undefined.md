@@ -12,7 +12,7 @@
 
 코딩 방법은 Python 코딩 가이드에 따라서 합니다.
 
-
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 ## STEP 2 — AI 카메라에 업로드
 

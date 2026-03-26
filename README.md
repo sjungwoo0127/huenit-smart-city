@@ -28,7 +28,7 @@
 
 > 크기
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 ### 전원 및 네트워크 안내
 
@@ -117,6 +117,8 @@
 * **시작** — 스마트 시티의 버튼을 **한 번** 누릅니다.
 * **강제 종료** — 스마트 시티의 버튼을 **5초 이상** 길게 누릅니다.
 
+<figure><img src=".gitbook/assets/scene_transition.png" alt=""><figcaption></figcaption></figure>
+
 {% embed url="https://youtu.be/5Z8vdFcyWso" %}
 
 
@@ -139,6 +141,8 @@
 2. 인디케이터의 **빛이 깜빡거리는 것**을 확인합니다.
 3. 깜빡거림이 끝나고 **빛이 켜지면** 와이파이 연결이 완료된 것입니다.
 4. 이후 AI카메라를 장착합니다.
+
+{% embed url="https://youtu.be/KOzdjurOQ8s" %}
 
 ### AI 카메라 장착
 
@@ -176,7 +180,7 @@
 
 똑같은 미션을 한 번 더 실행하고 싶을 경우, AI 카메라의 **전원 버튼을 눌러 초기화**해 주어야 합니다. 초기화 없이 재실행하면 정상적으로 동작하지 않을 수 있습니다.
 
-<figure><img src=".gitbook/assets/image (1).png" alt="" width="375"><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 
 ### 충전
 
