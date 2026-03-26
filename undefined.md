@@ -38,4 +38,8 @@
 * <mark style="color:orange;">**주황**</mark> — 미션 실행 중
 * <mark style="color:red;">**빨강**</mark> — 미션 실패
 
-_추후 업데이트 예정_
+
+
+## 미션 성공 영상
+
+{% embed url="https://youtu.be/WZ9rX9awKrk" %}
