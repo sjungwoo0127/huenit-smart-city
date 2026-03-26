@@ -28,7 +28,7 @@
 
 > 크기
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### 전원 및 네트워크 안내
 
@@ -74,6 +74,8 @@
 
 스마트 시티는 전원을 연결하면, 스마트 시티의 리니어 벨트가 자동으로 초기 위치로 이동합니다. 이 과정은 약 1분정도 소요됩니다.
 
+{% embed url="https://youtu.be/qVChE-Auwyw" %}
+
 > (키오스크) 전원 연결시 앱 자동 실행
 
 키오스크의 전원을 연결하면, 자동으로 키오스크에서 앱이 자동으로 실행 됩니다.이 과정은 약 2분정도 소요됩니다.
@@ -106,16 +108,14 @@
 * <mark style="color:orange;">**주황**</mark> — 미션 실행 중
 * <mark style="color:red;">**빨강**</mark> — 미션 실패
 
-<figure><img src=".gitbook/assets/IMG_7962.jpg" alt=""><figcaption><p>미션 성공 시 초록색으로 점등</p></figcaption></figure>
-
-<figure><img src=".gitbook/assets/IMG_7960.jpg" alt=""><figcaption><p>미션 실행 중 주황색으로 깜빡</p></figcaption></figure>
-
-<figure><img src=".gitbook/assets/IMG_7961.jpg" alt=""><figcaption><p>미션 실패 시 빨간색으로 점등</p></figcaption></figure>
+<div><figure><img src=".gitbook/assets/IMG_7962.jpg" alt=""><figcaption><p>미션 성공 시 초록색으로 점등</p></figcaption></figure> <figure><img src=".gitbook/assets/IMG_7960.jpg" alt=""><figcaption><p>미션 실행 중 주황색으로 깜빡</p></figcaption></figure> <figure><img src=".gitbook/assets/IMG_7961.jpg" alt=""><figcaption><p>미션 실패 시 빨간색으로 점등</p></figcaption></figure></div>
 
 ## 스마트 시티 전원 조작
 
 * **시작** — 스마트 시티의 버튼을 **한 번** 누릅니다.
 * **강제 종료** — 스마트 시티의 버튼을 **5초 이상** 길게 누릅니다.
+
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src=".gitbook/assets/scene_transition.png" alt=""><figcaption></figcaption></figure>
 
@@ -146,15 +146,13 @@
 
 ### AI 카메라 장착
 
-<figure><img src=".gitbook/assets/IMG_7955.jpg" alt=""><figcaption><p>AI 카메라 장착 방법</p></figcaption></figure>
+<div><figure><img src=".gitbook/assets/IMG_7955.jpg" alt=""><figcaption><p>AI 카메라 장착 방법</p></figcaption></figure> <figure><img src=".gitbook/assets/IMG_7963.jpg" alt=""><figcaption><p>Ai 카메라가 장착된 모습</p></figcaption></figure></div>
 
 {% hint style="danger" %}
 **주의사항**
 
 카메라를 끼울 때 반드시 **꽉 끼워주세요.** 대부분의 문제가 카메라가 제대로 장착되지 않아서 발생합니다. 사용 후에는 카메라를 빼서 보관해 주세요.
 {% endhint %}
-
-<figure><img src=".gitbook/assets/IMG_7963.jpg" alt=""><figcaption><p>Ai 카메라가 장착된 모습</p></figcaption></figure>
 
 ### 모바일 로봇 방향
 
@@ -180,7 +178,7 @@
 
 똑같은 미션을 한 번 더 실행하고 싶을 경우, AI 카메라의 **전원 버튼을 눌러 초기화**해 주어야 합니다. 초기화 없이 재실행하면 정상적으로 동작하지 않을 수 있습니다.
 
-<figure><img src=".gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1) (1).png" alt="" width="375"><figcaption></figcaption></figure>
 
 ### 충전
 
